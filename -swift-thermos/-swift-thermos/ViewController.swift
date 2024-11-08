@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     // 중앙에 UILabel 추가
     private func setupLabel() {
         let label = UILabel()
-        label.text = "Conditional"
+        label.text = "\(RootSetting.businessName)"
         label.textColor = .white
         label.font = UIFont(name: "Lancelot", size: 50)
         label.textAlignment = .center

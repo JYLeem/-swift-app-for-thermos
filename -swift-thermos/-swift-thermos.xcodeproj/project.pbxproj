@@ -16,6 +16,8 @@
 		9D4346CF2CDCB7BB00D0A0D4 /* _swift_thermosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346CE2CDCB7BB00D0A0D4 /* _swift_thermosTests.swift */; };
 		9D4346D92CDCB7BB00D0A0D4 /* _swift_thermosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346D82CDCB7BB00D0A0D4 /* _swift_thermosUITests.swift */; };
 		9D4346DB2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346DA2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift */; };
+		9D4346E92CDDE61300D0A0D4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */; };
+		9D4346EB2CDDF90300D0A0D4 /* RootSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346EA2CDDF90300D0A0D4 /* RootSetting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		9D4346D42CDCB7BB00D0A0D4 /* -swift-thermosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "-swift-thermosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D4346D82CDCB7BB00D0A0D4 /* _swift_thermosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _swift_thermosUITests.swift; sourceTree = "<group>"; };
 		9D4346DA2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _swift_thermosUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		9D4346EA2CDDF90300D0A0D4 /* RootSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSetting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		9D4346B62CDCB7BA00D0A0D4 /* -swift-thermos */ = {
 			isa = PBXGroup;
 			children = (
+				9D4346E72CDDE5F100D0A0D4 /* Home */,
 				9D4346B72CDCB7BA00D0A0D4 /* AppDelegate.swift */,
 				9D4346B92CDCB7BA00D0A0D4 /* SceneDelegate.swift */,
 				9D4346BB2CDCB7BA00D0A0D4 /* ViewController.swift */,
@@ -106,6 +111,7 @@
 				9D4346C02CDCB7BB00D0A0D4 /* Assets.xcassets */,
 				9D4346C22CDCB7BB00D0A0D4 /* LaunchScreen.storyboard */,
 				9D4346C52CDCB7BB00D0A0D4 /* Info.plist */,
+				9D4346EA2CDDF90300D0A0D4 /* RootSetting.swift */,
 			);
 			path = "-swift-thermos";
 			sourceTree = "<group>";
@@ -125,6 +131,14 @@
 				9D4346DA2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift */,
 			);
 			path = "-swift-thermosUITests";
+			sourceTree = "<group>";
+		};
+		9D4346E72CDDE5F100D0A0D4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D4346EB2CDDF90300D0A0D4 /* RootSetting.swift in Sources */,
 				9D4346BC2CDCB7BA00D0A0D4 /* ViewController.swift in Sources */,
 				9D4346B82CDCB7BA00D0A0D4 /* AppDelegate.swift in Sources */,
 				9D4346BA2CDCB7BA00D0A0D4 /* SceneDelegate.swift in Sources */,
+				9D4346E92CDDE61300D0A0D4 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
