@@ -20,13 +20,33 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var unitAlterBtn: UISegmentedControl!
     
     var thermosNickName : String = "Alpha1"
+    var temp : Float = 30.0
     
     // MARK: - Actions
+    @IBAction func unitAlterButtonTapped(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        // celc
+        case 0:
+            updateTempBarAppearance(emptyColour: UIColor(red: 254/255, green: 219/255, blue: 195/255, alpha: 1.0).cgColor,
+                                    filledColour: UIColor(red: 250/255, green: 135/255, blue: 52/255, alpha: 1.0).cgColor)
+            setProgress(for: temp, for: 100)
+        // fah
+        case 1:
+            updateTempBarAppearance(emptyColour: UIColor(red: 193/255, green: 195/255, blue: 255/255, alpha: 1.0).cgColor,
+                         filledColour: UIColor(red: 99/255, green: 112/255, blue: 255/255, alpha: 1.0).cgColor)
+            setProgress(for: temp, for: 212)
+        default:
+            break
+        
+        }
+    }
+    
 
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setProgress(for: temp, for: 100)
     }
 
 
@@ -40,10 +60,16 @@ class HomeViewController: UIViewController {
         setupThermosName()
         setupTopView()
         setupUnitAlterBtn()
+        setupTempBar()
     }
     
     private func setupMainView(){
         mainView.backgroundColor = RootSetting.themeColor
+    }
+    
+    private func updateTempBarAppearance(emptyColour: CGColor, filledColour: CGColor) {
+        backgroundLayer.strokeColor = emptyColour
+        progressLayer.strokeColor = filledColour
     }
     
     private func setupBussinessName(){
@@ -119,14 +145,7 @@ class HomeViewController: UIViewController {
             thermosName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             thermosName.topAnchor.constraint(equalTo: businessName.bottomAnchor, constant: 30)
         ])
-        
-        NSLayoutConstraint.activate([
-            tempBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tempBar.topAnchor.constraint(equalTo: thermosName.bottomAnchor, constant: 50),
-            tempBar.widthAnchor.constraint(equalToConstant: 150),   // tempBar의 가로 크기
-            tempBar.heightAnchor.constraint(equalToConstant: 20)    // tempBar의 세로 크기
-        ])
-        
+                
         // unitAlterBtn 제약 설정 (mainView 위, 20pt 간격)
         NSLayoutConstraint.activate([
             unitAlterBtn.centerXAnchor.constraint(equalTo: topView.trailingAnchor, constant: -60),
@@ -135,6 +154,7 @@ class HomeViewController: UIViewController {
             unitAlterBtn.heightAnchor.constraint(equalToConstant: 30)  // 정사각형으로 설정
         ])
     }
+    
     private func setupUnitAlterBtn() {
         unitAlterBtn.removeAllSegments()
         unitAlterBtn.insertSegment(withTitle: "°C", at: 0, animated: false)
@@ -145,11 +165,6 @@ class HomeViewController: UIViewController {
 
     private let progressLayer = CAShapeLayer()
     private let backgroundLayer = CAShapeLayer()
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setupTempBar()
-    }
 
     private func setupTempBar() {
         let center = CGPoint(x: tempBar.bounds.width / 2, y: tempBar.bounds.height)
@@ -164,17 +179,17 @@ class HomeViewController: UIViewController {
         backgroundLayer.lineWidth = 20 // 두께 설정
         tempBar.layer.addSublayer(backgroundLayer)
 
-        // 프로그레스 레이어 설정
+        // 중간 비우기
         progressLayer.path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true).cgPath
-        progressLayer.strokeColor = UIColor.blue.cgColor
+        progressLayer.strokeColor = UIColor(red: 250/255, green: 135/255, blue: 52/255, alpha: 1.0).cgColor
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineWidth = 20 // 두께 설정
         progressLayer.strokeEnd = 0 // 초기 값
         tempBar.layer.addSublayer(progressLayer)
     }
 
-    func setProgress(_ progress: Float) {
-        progressLayer.strokeEnd = CGFloat(progress)
+    func setProgress(for temp: Float, for maxTemp : Float) {
+        let progress = max(0, min(1, CGFloat((temp - 0) / (maxTemp - 0))))
+        progressLayer.strokeEnd = progress
     }
-
 }
