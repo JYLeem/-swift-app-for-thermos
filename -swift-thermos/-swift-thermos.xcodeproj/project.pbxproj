@@ -18,6 +18,8 @@
 		9D4346DB2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346DA2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift */; };
 		9D4346E92CDDE61300D0A0D4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */; };
 		9D4346EB2CDDF90300D0A0D4 /* RootSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346EA2CDDF90300D0A0D4 /* RootSetting.swift */; };
+		9D4346EE2CE6050D00D0A0D4 /* AlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4346EC2CE6050D00D0A0D4 /* AlarmTableViewCell.swift */; };
+		9D4346EF2CE6050D00D0A0D4 /* AlarmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4346ED2CE6050D00D0A0D4 /* AlarmTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		9D4346DA2CDCB7BB00D0A0D4 /* _swift_thermosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _swift_thermosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9D4346EA2CDDF90300D0A0D4 /* RootSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSetting.swift; sourceTree = "<group>"; };
+		9D4346EC2CE6050D00D0A0D4 /* AlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTableViewCell.swift; sourceTree = "<group>"; };
+		9D4346ED2CE6050D00D0A0D4 /* AlarmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				9D4346E82CDDE61300D0A0D4 /* HomeViewController.swift */,
+				9D4346EC2CE6050D00D0A0D4 /* AlarmTableViewCell.swift */,
+				9D4346ED2CE6050D00D0A0D4 /* AlarmTableViewCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -248,6 +254,7 @@
 				9D4346C12CDCB7BB00D0A0D4 /* Assets.xcassets in Resources */,
 				9D4346C42CDCB7BB00D0A0D4 /* Base in Resources */,
 				9D4346BF2CDCB7BA00D0A0D4 /* Base in Resources */,
+				9D4346EF2CE6050D00D0A0D4 /* AlarmTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +284,7 @@
 				9D4346B82CDCB7BA00D0A0D4 /* AppDelegate.swift in Sources */,
 				9D4346BA2CDCB7BA00D0A0D4 /* SceneDelegate.swift in Sources */,
 				9D4346E92CDDE61300D0A0D4 /* HomeViewController.swift in Sources */,
+				9D4346EE2CE6050D00D0A0D4 /* AlarmTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

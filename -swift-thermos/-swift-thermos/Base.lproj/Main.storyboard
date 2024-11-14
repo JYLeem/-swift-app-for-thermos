@@ -53,6 +53,13 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oi7-WX-lLS">
+                                        <rect key="frame" x="86" y="441" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -187,8 +194,10 @@
                     </view>
                     <connections>
                         <outlet property="alarmBtn" destination="Njv-Qw-rol" id="fwj-xU-3vY"/>
+                        <outlet property="alarmLabel" destination="Oi7-WX-lLS" id="nTM-Hs-hpf"/>
+                        <outlet property="alarmTableView" destination="e2B-gV-ehR" id="Nqd-2p-pe3"/>
+                        <outlet property="bottomView" destination="JWE-1p-1AC" id="tpa-O1-gig"/>
                         <outlet property="businessName" destination="TUT-6B-x8h" id="gpn-Nb-OAb"/>
-                        <outlet property="buttomView" destination="JWE-1p-1AC" id="tpa-O1-gig"/>
                         <outlet property="currentTempLabel" destination="4DU-JR-hHS" id="XAc-qN-pBP"/>
                         <outlet property="homeBtn" destination="Ib0-Tc-a8o" id="dlM-rJ-Z4H"/>
                         <outlet property="mainView" destination="8Ch-df-BOZ" id="WAn-1d-Pgs"/>

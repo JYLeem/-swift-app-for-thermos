@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var buttomView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var businessName: UILabel!
     @IBOutlet weak var alarmBtn: UIButton!
     @IBOutlet weak var profileBtn: UIButton!
@@ -23,9 +23,12 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tempNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     
+    @IBOutlet weak var alarmLabel: UILabel!
     @IBOutlet weak var homeBtn: UIButton!
     @IBOutlet weak var thermoListBtn: UIButton!
     @IBOutlet weak var settingBtn: UIButton!
+    
+    @IBOutlet weak var alarmTableView: UITableView!
     
     
     var thermosNickName : String = "Alpha1"
@@ -60,6 +63,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setProgress(for: temp, for: 100)
+        tableViewRegsiter()
+    }
+    
+    private func tableViewRegsiter() {
+        alarmTableView.delegate = self
+        alarmTableView.dataSource = self
+        
+        let alarmNib = UINib(nibName: "AlarmTableViewCell", bundle: nil)
+        alarmTableView.register(alarmNib, forCellReuseIdentifier: "AlarmTableViewCell")
+        
     }
 
 
@@ -79,9 +92,21 @@ class HomeViewController: UIViewController {
         setuptempNameLabel()
         setupCurrentTempLabel()
         setupButtomView()
-        setupHomeBtn ()
-        setupThermoListBtn ()
-        setupSettingBtn ()
+        setupHomeBtn()
+        setupThermoListBtn()
+        setupSettingBtn()
+        setupAlarmLabel()
+        setupAlarmTableView()
+    }
+    
+    private func setupAlarmTableView() {
+        alarmTableView.backgroundColor = .none
+    }
+    
+    private func setupAlarmLabel () {
+        alarmLabel.text = "알림 / 경고"
+        alarmLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        alarmLabel.sizeToFit()
     }
     
     private func setupHomeBtn () {
@@ -148,17 +173,19 @@ class HomeViewController: UIViewController {
         topView.layer.mask = shape
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupButtomView()
+    }
+
     private func setupButtomView() {
         let cornerRadius: CGFloat = 40
-        buttomView.layer.cornerRadius = 0
-        buttomView.layer.maskedCorners = []
-        
-        let maskPath = UIBezierPath(roundedRect: buttomView.bounds,
+        let maskPath = UIBezierPath(roundedRect: bottomView.bounds,
                                     byRoundingCorners: [.topLeft, .topRight],
                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
         let shape = CAShapeLayer()
         shape.path = maskPath.cgPath
-        buttomView.layer.mask = shape
+        bottomView.layer.mask = shape
     }
     
     private func setupMinTempLabel(){
@@ -201,23 +228,40 @@ class HomeViewController: UIViewController {
         homeBtn.translatesAutoresizingMaskIntoConstraints = false
         thermoListBtn.translatesAutoresizingMaskIntoConstraints = false
         settingBtn.translatesAutoresizingMaskIntoConstraints = false
+        alarmLabel.translatesAutoresizingMaskIntoConstraints = false
+        alarmTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // alarmTableView 제약 설정
+        NSLayoutConstraint.activate([
+            alarmTableView.leadingAnchor.constraint(equalTo: alarmLabel.leadingAnchor),
+            alarmTableView.topAnchor.constraint(equalTo: alarmLabel.bottomAnchor, constant: 15),
+            alarmTableView.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: -25),
+            alarmTableView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -30)
+        ])
+        
+        
+        // alarmLabel 제약 설정
+        NSLayoutConstraint.activate([
+            alarmLabel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 25),
+            alarmLabel.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 30)
+        ])
         
         // homeBtn 버튼 제약 설정
         NSLayoutConstraint.activate([
-            homeBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
-            homeBtn.leadingAnchor.constraint(equalTo: buttomView.leadingAnchor, constant: 10)
+            homeBtn.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            homeBtn.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 10)
         ])
 
         // homeBtn 버튼 제약 설정
         NSLayoutConstraint.activate([
-            thermoListBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
-            thermoListBtn.centerXAnchor.constraint(equalTo: buttomView.centerXAnchor)
+            thermoListBtn.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            thermoListBtn.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor)
         ])
         
         // homeBtn 버튼 제약 설정
         NSLayoutConstraint.activate([
-            settingBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
-            settingBtn.trailingAnchor.constraint(equalTo: buttomView.trailingAnchor, constant: -10)
+            settingBtn.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor),
+            settingBtn.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -10)
         ])
         
         // businessName 레이블 제약 설정
@@ -317,5 +361,24 @@ class HomeViewController: UIViewController {
     func setProgress(for temp: Float, for maxTemp : Float) {
         let progress = max(0, min(1, CGFloat((temp - 0) / (maxTemp - 0))))
         progressLayer.strokeEnd = progress
+    }
+}
+
+
+extension HomeViewController : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let alarmCell = alarmTableView.dequeueReusableCell(withIdentifier: "AlarmTableViewCell", for: indexPath) as? AlarmTableViewCell 
+        else { return UITableViewCell() }
+        
+        alarmCell.backgroundColor = .white
+        alarmCell.layer.cornerRadius = 15
+        alarmCell.layer.masksToBounds = true
+        tableView.separatorStyle = .none
+
+        return alarmCell
     }
 }
