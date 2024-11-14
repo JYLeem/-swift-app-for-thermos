@@ -18,6 +18,15 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var thermosName: UILabel!
     @IBOutlet weak var tempBar: UIView!
     @IBOutlet weak var unitAlterBtn: UISegmentedControl!
+    @IBOutlet weak var minTempLabel: UILabel!
+    @IBOutlet weak var maxTempLabel: UILabel!
+    @IBOutlet weak var tempNameLabel: UILabel!
+    @IBOutlet weak var currentTempLabel: UILabel!
+    
+    @IBOutlet weak var homeBtn: UIButton!
+    @IBOutlet weak var thermoListBtn: UIButton!
+    @IBOutlet weak var settingBtn: UIButton!
+    
     
     var thermosNickName : String = "Alpha1"
     var temp : Float = 30.0
@@ -30,14 +39,18 @@ class HomeViewController: UIViewController {
             updateTempBarAppearance(emptyColour: UIColor(red: 254/255, green: 219/255, blue: 195/255, alpha: 1.0).cgColor,
                                     filledColour: UIColor(red: 250/255, green: 135/255, blue: 52/255, alpha: 1.0).cgColor)
             setProgress(for: temp, for: 100)
+            maxTempLabel.text = "100"
+            currentTempLabel.text = String(Int(temp))
+
         // fah
         case 1:
             updateTempBarAppearance(emptyColour: UIColor(red: 193/255, green: 195/255, blue: 255/255, alpha: 1.0).cgColor,
                          filledColour: UIColor(red: 99/255, green: 112/255, blue: 255/255, alpha: 1.0).cgColor)
             setProgress(for: temp, for: 212)
+            maxTempLabel.text = "212"
+            currentTempLabel.text = String(Int(celToFah(for: temp)))
         default:
             break
-        
         }
     }
     
@@ -61,6 +74,34 @@ class HomeViewController: UIViewController {
         setupTopView()
         setupUnitAlterBtn()
         setupTempBar()
+        setupMinTempLabel()
+        setupMaxTempLabel()
+        setuptempNameLabel()
+        setupCurrentTempLabel()
+        setupButtomView()
+        setupHomeBtn ()
+        setupThermoListBtn ()
+        setupSettingBtn ()
+    }
+    
+    private func setupHomeBtn () {
+        homeBtn.setImage(UIImage(named: "homeSelected"), for: .normal)
+        homeBtn.setTitle("", for: .normal)
+    }
+    
+    private func setupThermoListBtn () {
+        thermoListBtn.setImage(UIImage(named: "thermoList"), for: .normal)
+        thermoListBtn.setTitle("", for: .normal)
+    }
+    
+    private func setupSettingBtn () {
+        settingBtn.setImage(UIImage(named: "setting"), for: .normal)
+        settingBtn.setTitle("", for: .normal)
+    }
+    
+    // 온도 변환 C -> F
+    private func celToFah(for currentTemp : Float ) -> Float {
+        return currentTemp * 9/5 + 32
     }
     
     private func setupMainView(){
@@ -106,18 +147,79 @@ class HomeViewController: UIViewController {
         shape.path = maskPath.cgPath
         topView.layer.mask = shape
     }
-
     
+    private func setupButtomView() {
+        let cornerRadius: CGFloat = 40
+        buttomView.layer.cornerRadius = 0
+        buttomView.layer.maskedCorners = []
+        
+        let maskPath = UIBezierPath(roundedRect: buttomView.bounds,
+                                    byRoundingCorners: [.topLeft, .topRight],
+                                    cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let shape = CAShapeLayer()
+        shape.path = maskPath.cgPath
+        buttomView.layer.mask = shape
+    }
+    
+    private func setupMinTempLabel(){
+        minTempLabel.text = "0"
+        minTempLabel.sizeToFit()
+    }
+    
+    private func setupMaxTempLabel(){
+        maxTempLabel.text = "100"
+        maxTempLabel.sizeToFit()
+    }
+    
+    private func setuptempNameLabel() {
+        tempNameLabel.text = "현재온도"
+        tempNameLabel.textColor = UIColor(red: 159/255, green: 159/255, blue: 159/255, alpha: 1.0)
+        tempNameLabel.font = UIFont(name: "Nil", size: 16)
+        tempNameLabel.sizeToFit()
+    }
+    
+    private func setupCurrentTempLabel() {
+        currentTempLabel.text = String(Int(temp))
+        currentTempLabel.textColor = UIColor(red: 63/255, green: 63/255, blue: 63/255, alpha: 1.0)
+        currentTempLabel.font = UIFont.boldSystemFont(ofSize: 70)
+        currentTempLabel.sizeToFit()
+    }
+    
+   
+
     private func setupConstraints() {
-        // 각 뷰의 Auto Layout 사용을 활성화합니다.
         businessName.translatesAutoresizingMaskIntoConstraints = false
         alarmBtn.translatesAutoresizingMaskIntoConstraints = false
         profileBtn.translatesAutoresizingMaskIntoConstraints = false
         thermosName.translatesAutoresizingMaskIntoConstraints = false
         tempBar.translatesAutoresizingMaskIntoConstraints = false
         unitAlterBtn.translatesAutoresizingMaskIntoConstraints = false
+        minTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        maxTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        tempNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        currentTempLabel.translatesAutoresizingMaskIntoConstraints = false
+        homeBtn.translatesAutoresizingMaskIntoConstraints = false
+        thermoListBtn.translatesAutoresizingMaskIntoConstraints = false
+        settingBtn.translatesAutoresizingMaskIntoConstraints = false
+        
+        // homeBtn 버튼 제약 설정
+        NSLayoutConstraint.activate([
+            homeBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
+            homeBtn.leadingAnchor.constraint(equalTo: buttomView.leadingAnchor, constant: 10)
+        ])
 
-
+        // homeBtn 버튼 제약 설정
+        NSLayoutConstraint.activate([
+            thermoListBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
+            thermoListBtn.centerXAnchor.constraint(equalTo: buttomView.centerXAnchor)
+        ])
+        
+        // homeBtn 버튼 제약 설정
+        NSLayoutConstraint.activate([
+            settingBtn.centerYAnchor.constraint(equalTo: buttomView.centerYAnchor),
+            settingBtn.trailingAnchor.constraint(equalTo: buttomView.trailingAnchor, constant: -10)
+        ])
+        
         // businessName 레이블 제약 설정
         NSLayoutConstraint.activate([
             businessName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -152,6 +254,30 @@ class HomeViewController: UIViewController {
             unitAlterBtn.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -20),
             unitAlterBtn.widthAnchor.constraint(equalToConstant: 50),  // unitAlterBtn의 너비
             unitAlterBtn.heightAnchor.constraint(equalToConstant: 30)  // 정사각형으로 설정
+        ])
+        
+        // minTempLabel 제약 설정
+        NSLayoutConstraint.activate([
+            minTempLabel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: -125),
+            minTempLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 65)
+        ])
+        
+        // maxTempLabel 제약 설정
+        NSLayoutConstraint.activate([
+            maxTempLabel.centerYAnchor.constraint(equalTo: minTempLabel.centerYAnchor),
+            maxTempLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -55)
+        ])
+        
+        // tempNameLabel 제약 설정
+        NSLayoutConstraint.activate([
+            tempNameLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            tempNameLabel.topAnchor.constraint(equalTo: thermosName.bottomAnchor, constant: 100)
+        ])
+        
+        // currentTempLabel 제약 설정
+        NSLayoutConstraint.activate([
+            currentTempLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor, constant: 5),
+            currentTempLabel.topAnchor.constraint(equalTo: tempNameLabel.bottomAnchor, constant: 1)
         ])
     }
     
