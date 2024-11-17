@@ -64,18 +64,9 @@ class HomeViewController: UIViewController {
         setupUI()
         setProgress(for: temp, for: 100)
         tableViewRegsiter()
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    private func tableViewRegsiter() {
-        alarmTableView.delegate = self
-        alarmTableView.dataSource = self
-        
-        let alarmNib = UINib(nibName: "AlarmTableViewCell", bundle: nil)
-        alarmTableView.register(alarmNib, forCellReuseIdentifier: "AlarmTableViewCell")
-        
-    }
-
-
     // MARK: - Functions
     private func setupUI(){
         setupMainView()
@@ -97,6 +88,14 @@ class HomeViewController: UIViewController {
         setupSettingBtn()
         setupAlarmLabel()
         setupAlarmTableView()
+    }
+    
+    private func tableViewRegsiter() {
+        alarmTableView.delegate = self
+        alarmTableView.dataSource = self
+        
+        let alarmNib = UINib(nibName: "AlarmTableViewCell", bundle: nil)
+        alarmTableView.register(alarmNib, forCellReuseIdentifier: "AlarmTableViewCell")
     }
     
     private func setupAlarmTableView() {
@@ -171,11 +170,6 @@ class HomeViewController: UIViewController {
         let shape = CAShapeLayer()
         shape.path = maskPath.cgPath
         topView.layer.mask = shape
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setupButtomView()
     }
 
     private func setupButtomView() {
