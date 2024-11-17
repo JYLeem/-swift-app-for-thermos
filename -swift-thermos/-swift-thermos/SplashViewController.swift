@@ -1,7 +1,10 @@
 import UIKit
+import CoreBluetooth
 
 class SplashViewController: UIViewController {
     @IBOutlet weak var splashImage: UIImageView!
+    private var centralManager: CBCentralManager?
+    private var isBluetoothAuthorized = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -9,11 +12,25 @@ class SplashViewController: UIViewController {
         setupSplashImage()
         setupGradientLayer()
         setupLabel()
-        
+                
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.transitionToHomeViewController()
         }
+        
+        initializeBluetooth()
+
     }
+    
+    private func initializeBluetooth() {
+        centralManager = CBCentralManager(delegate: self, queue: .main)
+    }
+    
+    private func checkAndTransition() {
+        if isBluetoothAuthorized {
+            transitionToHomeViewController()
+        }
+    }
+    
     
     // 이미지 설정 및 contentMode 적용
     private func setupSplashImage() {
@@ -70,5 +87,80 @@ class SplashViewController: UIViewController {
             window.rootViewController = navigationController
             UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
         }
+    }
+}
+
+extension SplashViewController: CBCentralManagerDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        switch central.state {
+        case .poweredOn:
+            print("Bluetooth is powered on")
+            // 스캔 시작하여 권한 요청 트리거
+            centralManager?.scanForPeripherals(withServices: nil)
+            
+            // 3초 후 화면 전환
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.isBluetoothAuthorized = true
+                self.checkAndTransition()
+            }
+            
+        case .unauthorized:
+            print("Bluetooth permission denied")
+            showBluetoothPermissionAlert()
+            
+            // 사용자가 '취소'를 선택하더라도 3초 후 화면 전환
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.isBluetoothAuthorized = true
+                self.checkAndTransition()
+            }
+            
+        case .poweredOff:
+            print("Bluetooth is powered off")
+            showBluetoothOffAlert()
+            
+            // 블루투스가 꺼져있어도 3초 후 화면 전환
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.isBluetoothAuthorized = true
+                self.checkAndTransition()
+            }
+            
+        default:
+            print("Bluetooth state: \(central.state)")
+            // 다른 상태에서도 3초 후 화면 전환
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.isBluetoothAuthorized = true
+                self.checkAndTransition()
+            }
+        }
+    }
+    
+    private func showBluetoothPermissionAlert() {
+        let alert = UIAlertController(
+            title: "블루투스 권한 필요",
+            message: "이 앱을 사용하기 위해서는 블루투스 권한이 필요합니다. 설정에서 권한을 허용해주세요.",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL)
+            }
+        })
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
+    private func showBluetoothOffAlert() {
+        let alert = UIAlertController(
+            title: "블루투스가 꺼져있습니다",
+            message: "블루투스를 켜주세요",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        
+        present(alert, animated: true)
     }
 }
