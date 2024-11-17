@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class SplashViewController: UIViewController {
     @IBOutlet weak var splashImage: UIImageView!
     
     override func viewDidLoad() {
